@@ -1,4 +1,4 @@
-import React, { Component, ComponentPropsWithoutRef, PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import './GridView.css'
 
@@ -10,8 +10,7 @@ type GridViewProps = {
         itemsPerPage: number,
         position: 'top' | 'bottom' | 'hide',
         onPgItemClick: ( id: string, ev: MouseEvent ) => void
-    } | false,
-    onItemClick?: ( id: string, ev: MouseEvent ) => void
+    } | false
 }
 
 export const GridView = ( props: GridViewProps) => {

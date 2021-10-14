@@ -1,18 +1,45 @@
 import React, { MouseEventHandler } from 'react';
 import styled from 'styled-components';
+import { Theme } from '../../app-c/theme';
 
 interface ButtonProps {
     label: string,
-    variant?: 'primary' | 'secondary' | 'small',
-    onClick?: MouseEventHandler<HTMLButtonElement>
+    rounded?: boolean,
+    variant?: 'outline' | 'filled',
+    onClick?: MouseEventHandler<HTMLButtonElement>//( ev: MouseEvent ) => void
 }
 
 const StyledButton = styled.button<ButtonProps>`
-    color: ${ (props) => props.variant == 'primary' ? 'red' : 'blue' };
+    ${ props => {
+        switch(props.variant) {
+            case 'filled':
+                return `color: ${ (props.theme as Theme).highlightCounterColor };
+                    background-color: ${ (props.theme as Theme).highlightColor };
+                    border: 1px solid ${ (props.theme as Theme).forthColor };
+                    
+                    &:hover{
+                        background-color: ${ (props.theme as Theme).highlightCounterColor };
+                        color: ${ (props.theme as Theme).highlightColor };
+                    }
+                    `
+            default:
+                return `color: ${ (props.theme as Theme).forthColor };
+                    background-color: ${ (props.theme as Theme).secondaryColor };
+                    border: 1px solid ${ (props.theme as Theme).forthColor };
+                    
+                    &:hover{
+                        background-color: ${ (props.theme as Theme).forthColor };
+                        color: ${ (props.theme as Theme).secondaryColor };
+                    }`
+        }
+    } }
+
+    ${ props => props.rounded ? `border-radius: 15px;` : '' }
+
     padding: 5px 15px;
-    border-radius: 15px;
-    border: 1px solid ${ (props) => props.variant == 'primary' ? 'red' : 'blue' };
     font-size: 12px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
 export const Button: React.FC<ButtonProps> = ( props ) => {
